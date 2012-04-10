@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/21/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 #import <CommonCrypto/CommonDigest.h>
 
@@ -36,6 +36,7 @@
 #import "RecordTripViewController.h"
 #import "SavedTripsViewController.h"
 #import "TripManager.h"
+#import "AgreementView.h"
 
 
 @implementation CycleTracksAppDelegate
@@ -65,7 +66,15 @@
 	
 	// initialize trip manager with the managed object context
 	TripManager *manager = [[[TripManager alloc] initWithManagedObjectContext:context] autorelease];
+
 	
+    
+
+    
+    
+    
+    
+    
 	
 	/*
 	 // initialize each tab's root view controller with the trip manager	
@@ -117,7 +126,7 @@
 	[tripsVC initTripManager:manager];
 
 	// select Record tab at launch
-	tabBarController.selectedIndex = 1;	
+	tabBarController.selectedIndex = 0;
 	
 	// set delegate to prevent changing tabs when locked
 	tabBarController.delegate = recordVC;
@@ -132,6 +141,11 @@
 	vc.managedObjectContext			= context;
 	
 	
+    UINavigationController	*nav1	= (UINavigationController*)[tabBarController.viewControllers 
+                                                                objectAtIndex:0];
+    AgreementView *vc1	= (AgreementView *)[nav1 topViewController];
+	vc1.managedObjectContext			= context;
+    
 	// create a tab bar controller and init with nav controllers above
 	//tabBarController = [[UITabBarController alloc] initWithNibName:@"MainWindow.xib" bundle:nil];
 	
@@ -148,8 +162,12 @@
 	 //recordTripViewController.parentView = tabBarController.tabBar;
 	 */
 	
+
+
+
+    
 	
-	// Add the tab bar controller's current view as a subview of the window
+//	// Add the tab bar controller's current view as a subview of the window
     [window addSubview:tabBarController.view];
 	[window makeKeyAndVisible];	
 }

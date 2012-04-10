@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/28/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 
 #import "CustomView.h"
@@ -97,7 +97,8 @@
 - (IBAction)save:(id)sender
 {
 	NSInteger row = [customPickerView selectedRowInComponent:0];
-	[delegate didPickPurpose:row];
+    NSInteger row1 = [customPickerView selectedRowInComponent:1];
+	[delegate didPickPurpose:row didPickMode:row1];
 }
 
 
@@ -136,7 +137,7 @@
 {		
 	[super viewDidLoad];
 	
-	self.title = NSLocalizedString(@"Trip Purpose", @"");
+	self.title = NSLocalizedString(@"Purpose/Mode", @"");
 
 	//self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	// self.view.backgroundColor = [[UIColor alloc] initWithRed:40. green:42. blue:57. alpha:1. ];
@@ -184,8 +185,11 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-	//NSLog(@"parent didSelectRow: %d inComponent:%d", row, component);
+	NSLog(@"parent didSelectRow: %d inComponent:%d", row, component);
 
+    if (component != 0)
+        return;
+    
 	switch (row) {
 		case 0:
 			description.text = kDescCommute;

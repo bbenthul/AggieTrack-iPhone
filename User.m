@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/25/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 #import "User.h"
 
@@ -42,5 +42,15 @@
 @dynamic workZIP;
 @dynamic homeZIP;
 @dynamic trips;
+@dynamic ownacar;
+@dynamic liveoncampus;
+@dynamic enterdrawing;
+@dynamic classification;
+@dynamic name;
+@dynamic hasaccepted;
+@dynamic hasenteredvalidinfo;
+@dynamic lastendlat;
+@dynamic lastendlong;
+
 
 @end

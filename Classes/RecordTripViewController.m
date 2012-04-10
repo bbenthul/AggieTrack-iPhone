@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 8/10/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 
 #import "constants.h"
@@ -38,6 +38,8 @@
 #import "TripManager.h"
 #import "Trip.h"
 #import "User.h"
+#import "Coord.h"
+
 
 
 @implementation RecordTripViewController
@@ -45,11 +47,11 @@
 @synthesize locationManager, tripManager, reminderManager;
 @synthesize infoButton, saveButton, startButton, lockButton, slider, sliderView, opacityMask, parentView;
 @synthesize timer, timeCounter, distCounter;
-@synthesize locked, recording, shouldUpdateCounter, userInfoSaved;
+@synthesize locked, recording, shouldUpdateCounter, userInfoSaved, ispurposepending, lasttriplastpoint;
+
 
 
 #pragma mark CLLocationManagerDelegate methods
-
 
 - (CLLocationManager *)getLocationManager {
 	
@@ -247,6 +249,7 @@
 	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackTranslucent;
 	self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
 
+    
 	// Set the title.
 	// self.title = @"Record New Trip";
 	
@@ -276,6 +279,7 @@
 	self.locked = NO;
 	self.recording = NO;
 	self.shouldUpdateCounter = NO;
+    self.ispurposepending = NO;
 	
 	// Start the location manager.
 	[[self getLocationManager] startUpdatingLocation];
@@ -470,6 +474,8 @@
 			//[[self navigationController] pushViewController:pickerViewController animated:YES];
 			[self.navigationController presentModalViewController:pickerViewController animated:YES];
 			[pickerViewController release];
+            
+            
 		}
 			break;
 			
@@ -522,14 +528,53 @@
 		{
 			NSLog(@"saving didDismissWithButtonIndex: %d", buttonIndex);
 			
-			// keep a pointer to our trip to pass to map view below
-			Trip *trip = tripManager.trip;
-			[self resetRecordingInProgress];
-			
-			// load map view of saved trip
-			MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
-			[[self navigationController] pushViewController:mvc animated:YES];
-			[mvc release];
+            //  show mapview only for the non-bigus trip which is the current one
+            if (self.ispurposepending == YES)
+            {
+                // keep a pointer to our trip to pass to map view below
+                Trip *trip = tripManager.trip;
+                [self resetRecordingInProgress];
+                MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
+                [[self navigationController] pushViewController:mvc animated:YES];
+                [mvc release];
+            }
+            
+            //  reset pending, show the purpose picker for the bogus trip
+            if (self.ispurposepending == YES)
+            {
+                self.ispurposepending = NO;
+                NSLog(@"one more popup coming up");
+                UIAlertView *alert = [[UIAlertView alloc]
+                                      initWithTitle: @""
+                                      message: @"Your last end point was far from this trip's start point. Please select the purpose and mode for the missing trip."
+                                      delegate: nil
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil];
+                [alert show];
+                [alert release];
+
+                
+                //  now for the bogus trip
+                //        int numcoords = [tripManager.trip.coords count];
+//                NSArray		*filteredCoords		= [tripManager.trip.coords allObjects];
+//                [tripManager addCoord:[filteredCoords objectAtIndex:0]];
+                
+                [tripManager addCoord:[[CLLocation alloc] initWithLatitude:[self.lasttriplastpoint.latitude doubleValue] longitude:[self.lasttriplastpoint.longitude doubleValue]]];
+                
+                [tripManager addLastUsedCoord];
+                
+
+                // Trip Purpose
+                NSLog(@"INIT + PUSH IN didpickpurpose");
+                PickerViewController *pickerViewController = [[PickerViewController alloc]
+                                                              //initWithPurpose:[tripManager getPurposeIndex]];
+                                                              initWithNibName:@"TripPurposePicker" bundle:nil];
+                [pickerViewController setDelegate:self];
+                //[[self navigationController] pushViewController:pickerViewController animated:YES];
+                [self.navigationController presentModalViewController:pickerViewController animated:YES];
+                [pickerViewController release];    
+                
+            }
 		}
 			break;
 	}
@@ -544,15 +589,47 @@
 	// go directly to TripPurpose, user can cancel from there
 	if ( YES )
 	{
-		// Trip Purpose
-		NSLog(@"INIT + PUSH");
-		PickerViewController *pickerViewController = [[PickerViewController alloc]
-													  //initWithPurpose:[tripManager getPurposeIndex]];
-													  initWithNibName:@"TripPurposePicker" bundle:nil];
-		[pickerViewController setDelegate:self];
-		//[[self navigationController] pushViewController:pickerViewController animated:YES];
-		[self.navigationController presentModalViewController:pickerViewController animated:YES];
-		[pickerViewController release];
+        
+        
+        //  do the discrepancy checking here.
+        int numpoints = [tripManager.trip.coords count];
+        NSLog(@"cjh trip has %d points", numpoints);
+        //  WHAT IF IT HAS ZERO POINTS
+        
+        bool isdiscrepancy = NO;
+        
+        if (numpoints != 0)
+        {
+            // check if the stored latlong is zero....initialize it if so.
+            isdiscrepancy = [tripManager checkForInit];
+        
+        }
+        
+        //////////////////////////////////////
+        // TODO: UNCOMMENT THIS
+//        isdiscrepancy = YES;
+        //////////////////////////////////////
+        
+        if (isdiscrepancy == YES)
+        {
+            NSLog(@"Theres a discrepancy now....");
+            self.ispurposepending = YES;
+            int numcoords = [tripManager.trip.coords count];
+            NSArray		*filteredCoords		= [tripManager.trip.coords allObjects];
+            self.lasttriplastpoint = [filteredCoords objectAtIndex:numcoords-1];
+        }
+        
+        // Trip Purpose
+        NSLog(@"INIT + PUSH");
+        PickerViewController *pickerViewController = [[PickerViewController alloc]
+                                                      //initWithPurpose:[tripManager getPurposeIndex]];
+                                                      initWithNibName:@"TripPurposePicker" bundle:nil];
+        [pickerViewController setDelegate:self];
+        //[[self navigationController] pushViewController:pickerViewController animated:YES];
+        [self.navigationController presentModalViewController:pickerViewController animated:YES];
+        [pickerViewController release];            
+
+
 	}
 	
 	// prompt to confirm first
@@ -563,9 +640,13 @@
 		
 		// construct purpose confirmation string
 		NSString *purpose = nil;
-		if ( tripManager != nil )
+        NSString *mode = nil;
+        
+		if ( tripManager != nil ) {
 			purpose = [self getPurposeString:[tripManager getPurposeIndex]];
-		
+   			mode = [self getModeString:[tripManager getModeIndex]];
+		}
+        
 		NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
 		
 		// present action sheet
@@ -1083,12 +1164,40 @@
 	return purpose;
 }
 
+- (NSString *)updateModeWithString:(NSString *)mode
+{
+	// update UI
+	/*
+	 if ( tripPurposeCell != nil )
+	 {
+	 tripPurposeCell.accessoryType = UITableViewCellAccessoryCheckmark;
+	 tripPurposeCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GreenCheckMark3.png"]];
+	 tripPurposeCell.detailTextLabel.text = purpose;
+	 tripPurposeCell.detailTextLabel.enabled = YES;
+	 tripPurposeCell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
+	 tripPurposeCell.detailTextLabel.minimumFontSize = kMinimumFontSize;
+	 }
+	 */
+	
+	// only enable start button if we don't already have a pending trip
+	if ( timer == nil )
+		startButton.enabled = YES;
+	
+	startButton.hidden = NO;
+	
+	return mode;
+}
+
 
 - (NSString *)updatePurposeWithIndex:(unsigned int)index
 {
 	return [self updatePurposeWithString:[tripManager getPurposeString:index]];
 }
 
+- (NSString *)updateModeWithIndex:(unsigned int)index
+{
+	return [self updateModeWithString:[tripManager getModeString:index]];
+}
 
 - (void)dealloc {
     [managedObjectContext release];
@@ -1182,6 +1291,20 @@ shouldSelectViewController:(UIViewController *)viewController
 	return [self updatePurposeWithString:purpose];
 }
 
+- (NSString *)setMode:(unsigned int)index
+{
+	NSString *mode = [tripManager setMode:index];
+	NSLog(@"setMod: %@", mode);
+    
+	//[self.navigationController popViewControllerAnimated:YES];
+	
+	return [self updateModeWithString:mode];
+}
+
+- (NSString *)getModeString:(unsigned int)index
+{
+	return [tripManager getModeString:index];
+}
 
 - (NSString *)getPurposeString:(unsigned int)index
 {
@@ -1198,7 +1321,7 @@ shouldSelectViewController:(UIViewController *)viewController
 }
 
 
-- (void)didPickPurpose:(unsigned int)index
+- (void)didPickPurpose:(unsigned int)index didPickMode:(unsigned int)index1
 {
 	[self.navigationController dismissModalViewControllerAnimated:YES];
 	
@@ -1208,9 +1331,13 @@ shouldSelectViewController:(UIViewController *)viewController
 	saveButton.enabled = NO;
 	startButton.enabled = YES;
 	[self resetTimer];
-	
+
 	[tripManager setPurpose:index];
-	[tripManager promptForTripNotes];
+  	[tripManager setMode:index1];
+    
+    
+    [tripManager promptForTripNotes];
+
 }
 
 

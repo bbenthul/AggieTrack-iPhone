@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 8/8/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>

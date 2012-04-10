@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/22/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 
 #import <CoreLocation/CoreLocation.h>
@@ -56,6 +56,7 @@ UITextViewDelegate>
 	Trip *trip;
 	CLLocationDistance distance;
 	NSInteger purposeIndex;
+  	NSInteger modeIndex;
 	
 	NSMutableArray *coords;
     NSManagedObjectContext *managedObjectContext;
@@ -90,15 +91,18 @@ UITextViewDelegate>
 - (BOOL)loadTrip:(Trip*)trip;
 
 - (void)createTrip;
+- (bool)checkForInit;
 - (void)createTrip:(unsigned int)index;
 
 - (CLLocationDistance)addCoord:(CLLocation*)location;
+- (void)addLastUsedCoord;
 - (void)saveNotes:(NSString*)notes;
 - (void)saveTrip;
 
 - (CLLocationDistance)getDistanceEstimate;
 
 - (NSInteger)getPurposeIndex;
+- (NSInteger)getModeIndex;
 
 - (void)promptForTripNotes;
 
@@ -117,6 +121,9 @@ UITextViewDelegate>
 
 + (unsigned int)getPurposeIndex:(NSString*)string;
 + (NSString *)getPurposeString:(unsigned int)index;
+
++ (unsigned int)getModeIndex:(NSString*)string;
++ (NSString *)getModeString:(unsigned int)index;
 
 @end
 

@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/23/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 
 #import "PersonalInfoViewController.h"
@@ -37,7 +37,7 @@
 @implementation PersonalInfoViewController
 
 @synthesize delegate, managedObjectContext, user;
-@synthesize age, email, gender, homeZIP, workZIP, schoolZIP, cyclingFreq;
+@synthesize age, email, gender, homeZIP, workZIP, schoolZIP, cyclingFreq, entersurveyswitch, owncarswitch, liveoncampusswitch, classification, name;
 
 
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -75,7 +75,7 @@
 
 - (UITextField*)initTextFieldAlpha
 {
-	CGRect frame = CGRectMake( 152, 7, 138, 29 );
+	CGRect frame = CGRectMake( 190, 7, 100, 29 );
 	UITextField *textField = [[UITextField alloc] initWithFrame:frame];
 	textField.borderStyle = UITextBorderStyleRoundedRect;
 	textField.textAlignment = UITextAlignmentRight;
@@ -86,10 +86,56 @@
 	return textField;
 }
 
+- (UITextField*)initTextFieldAlphaPicker
+{
+    
+    countryPicker = [[UIPickerView alloc] initWithFrame:CGRectZero];
+    countryPicker.delegate = self;
+    countryPicker.dataSource = self;
+    [countryPicker setShowsSelectionIndicator:YES];
+
+    
+	CGRect frame = CGRectMake( 190, 7, 100, 29 );
+	UITextField *textField = [[UITextField alloc] initWithFrame:frame];
+	textField.borderStyle = UITextBorderStyleRoundedRect;
+	textField.textAlignment = UITextAlignmentRight;
+	textField.placeholder = @"";
+    textField.inputView = countryPicker;
+//    textField.delegate = self;
+    [countryPicker release];    
+    
+    
+    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+    keyboardDoneButtonView.barStyle = UIBarStyleBlack;
+    keyboardDoneButtonView.translucent = YES;
+    keyboardDoneButtonView.tintColor = nil;
+    [keyboardDoneButtonView sizeToFit];
+    UIBarButtonItem* doneButton = [[[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                                    style:UIBarButtonItemStyleBordered target:self
+                                                                   action:@selector(pickerDoneClicked:)] autorelease];
+    
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
+    
+    // Plug the keyboardDoneButtonView into the text field...
+    textField.inputAccessoryView = keyboardDoneButtonView;  
+    
+    [keyboardDoneButtonView release];
+
+    
+    
+	return textField;
+}
+
+- (IBAction) pickerDoneClicked:(id) sender
+{
+    [classification resignFirstResponder];
+    
+}
+
 
 - (UITextField*)initTextFieldEmail
 {
-	CGRect frame = CGRectMake( 152, 7, 138, 29 );
+	CGRect frame = CGRectMake( 190, 7, 100, 29 );
 	UITextField *textField = [[UITextField alloc] initWithFrame:frame];
 	textField.autocapitalizationType = UITextAutocapitalizationTypeNone,
 	textField.borderStyle = UITextBorderStyleRoundedRect;
@@ -104,7 +150,7 @@
 
 - (UITextField*)initTextFieldNumeric
 {
-	CGRect frame = CGRectMake( 152, 7, 138, 29 );
+	CGRect frame = CGRectMake( 190, 7, 100, 29 );
 	UITextField *textField = [[UITextField alloc] initWithFrame:frame];
 	textField.borderStyle = UITextBorderStyleRoundedRect;
 	textField.textAlignment = UITextAlignmentRight;
@@ -113,6 +159,18 @@
 	textField.returnKeyType = UIReturnKeyDone;
 	textField.delegate = self;
 	return textField;
+}
+
+
+- (UISegmentedControl*)initYesNoSwitch
+{
+	CGRect frame = CGRectMake( 190, 7, 100, 29 );
+    UISegmentedControl *yesnoswitch = [[UISegmentedControl alloc] initWithFrame:frame];
+    [yesnoswitch insertSegmentWithTitle:@"Yes" atIndex:0 animated:FALSE];
+    [yesnoswitch insertSegmentWithTitle:@"No" atIndex:1 animated:FALSE];
+    yesnoswitch.selectedSegmentIndex = UISegmentedControlNoSegment;
+    
+	return yesnoswitch;
 }
 
 
@@ -131,20 +189,39 @@
 }
 
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    arrayNo = [[NSMutableArray alloc] init];
+    [arrayNo addObject:@" Staff "];
+    [arrayNo addObject:@" Faculty "];
+    [arrayNo addObject:@" Freshman "];
+    [arrayNo addObject:@" Junior "];
+    [arrayNo addObject:@" Senior "];
+    [arrayNo addObject:@" Graduate Student "];
+    [arrayNo addObject:@" Postdoc "];
+    
 
 	// Set the title.
 	// self.title = @"Personal Info";
 	
 	// initialize text fields
-	self.age		= [self initTextFieldNumeric];
+//	self.age		= [self initTextFieldNumeric];
 	self.email		= [self initTextFieldEmail];
-	self.gender		= [self initTextFieldAlpha];
-	self.homeZIP	= [self initTextFieldNumeric];
-	self.workZIP	= [self initTextFieldNumeric];
-	self.schoolZIP	= [self initTextFieldNumeric];
+//	self.gender		= [self initTextFieldAlpha];
+//	self.homeZIP	= [self initTextFieldNumeric];
+//	self.workZIP	= [self initTextFieldNumeric];
+//	self.schoolZIP	= [self initTextFieldNumeric];
+    self.entersurveyswitch	= [self initYesNoSwitch];
+    self.owncarswitch	= [self initYesNoSwitch];
+    self.liveoncampusswitch	= [self initYesNoSwitch];
+    self.classification = [self initTextFieldAlphaPicker];
+    self.name = [self initTextFieldAlpha];
+    
+    
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -181,20 +258,51 @@
 	if ( user != nil )
 	{
 		// initialize text fields to saved personal info
-		age.text		= user.age;
+//		age.text		= user.age;
 		email.text		= user.email;
-		gender.text		= user.gender;
-		homeZIP.text	= user.homeZIP;
-		workZIP.text	= user.workZIP;
-		schoolZIP.text	= user.schoolZIP;
+//        NSLog(@"is this the problem");
+//		gender.text		= user.gender;
+//		homeZIP.text	= user.homeZIP;
+//		workZIP.text	= user.workZIP;
+//		schoolZIP.text	= user.schoolZIP;
 		
-		// init cycling frequency
-		NSLog(@"init cycling freq: %d", [user.cyclingFreq intValue]);
-		cyclingFreq		= [NSNumber numberWithInt:[user.cyclingFreq intValue]];
-		
-		if ( !([user.cyclingFreq intValue] > kMaxCyclingFreq) )
-			[self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:[user.cyclingFreq integerValue] 
-																					  inSection:2]];
+        classification.text = user.classification;
+
+        
+        name.text = user.name;
+        
+        if ([user.ownacar isEqualToString:@"No"]) {
+            [owncarswitch setSelectedSegmentIndex:1];
+        }
+        else if ([user.ownacar isEqualToString:@"Yes"]) {
+            [owncarswitch setSelectedSegmentIndex:0];
+        } else {
+            owncarswitch.selectedSegmentIndex = UISegmentedControlNoSegment;
+        }
+        
+        if ([user.liveoncampus isEqualToString:@"No"])
+            [liveoncampusswitch setSelectedSegmentIndex:1];
+        else if ([user.liveoncampus isEqualToString:@"Yes"])
+            [liveoncampusswitch setSelectedSegmentIndex:0];
+        else
+            liveoncampusswitch.selectedSegmentIndex = UISegmentedControlNoSegment;
+        
+        if ([user.enterdrawing isEqualToString:@"No"])
+            [entersurveyswitch setSelectedSegmentIndex:1];
+        else        if ([user.enterdrawing isEqualToString:@"Yes"])
+            [entersurveyswitch setSelectedSegmentIndex:0];
+        else
+            entersurveyswitch.selectedSegmentIndex = UISegmentedControlNoSegment;
+        
+        
+        
+//		// init cycling frequency
+//		NSLog(@"init cycling freq: %d", [user.cyclingFreq intValue]);
+//		cyclingFreq		= [NSNumber numberWithInt:[user.cyclingFreq intValue]];
+//		
+//		if ( !([user.cyclingFreq intValue] > kMaxCyclingFreq) )
+//			[self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:[user.cyclingFreq integerValue] 
+//																					  inSection:2]];
 	}
 	else
 		NSLog(@"init FAIL");
@@ -205,6 +313,29 @@
 
 
 #pragma mark UITextFieldDelegate methods
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [arrayNo count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    classification.text = (NSString *)[arrayNo objectAtIndex:row];
+    return [arrayNo objectAtIndex:row];
+}
+
+- (void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    classification.text = (NSString *)[arrayNo objectAtIndex:row];
+}
+
+
 
 
 // the user pressed the "Done" button, so dismiss the keyboard
@@ -227,7 +358,7 @@
 		if ( textField == age )
 		{
 			NSLog(@"saving age: %@", age.text);
-			[user setAge:age.text];
+//			[user setAge:age.text];
 		}
 		if ( textField == email )
 		{
@@ -237,24 +368,36 @@
 		if ( textField == gender )
 		{
 			NSLog(@"saving gender: %@", gender.text);
-			[user setGender:gender.text];
+//			[user setGender:gender.text];
 		}
 		if ( textField == homeZIP )
 		{
 			NSLog(@"saving homeZIP: %@", homeZIP.text);
-			[user setHomeZIP:homeZIP.text];
+//			[user setHomeZIP:homeZIP.text];
 		}
 		if ( textField == schoolZIP )
 		{
 			NSLog(@"saving schoolZIP: %@", schoolZIP.text);
-			[user setSchoolZIP:schoolZIP.text];
+//			[user setSchoolZIP:schoolZIP.text];
 		}
 		if ( textField == workZIP )
 		{
 			NSLog(@"saving workZIP: %@", workZIP.text);
-			[user setWorkZIP:workZIP.text];
+//			[user setWorkZIP:workZIP.text];
 		}
-		
+
+        if ( textField == classification )
+		{
+			NSLog(@"saving classification: %@", classification.text);
+			[user setClassification:classification.text];
+		}
+        
+        if ( textField == name )
+		{
+			NSLog(@"saving name: %@", name.text);
+			[user setName:name.text];
+		}
+        
 		NSError *error;
 		if (![managedObjectContext save:&error]) {
 			// Handle the error.
@@ -266,6 +409,36 @@
 
 - (void)done
 {
+    if (entersurveyswitch.selectedSegmentIndex == UISegmentedControlNoSegment ||
+        owncarswitch.selectedSegmentIndex == UISegmentedControlNoSegment ||
+        liveoncampusswitch.selectedSegmentIndex == UISegmentedControlNoSegment ||
+        [classification.text isEqualToString:@""]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@":(" message:@"Please note mandatory requirements!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        
+        return;
+    }
+    
+    // if enter drawing, enter name and email
+    if (entersurveyswitch.selectedSegmentIndex == 0 && ([email.text isEqualToString:@""] || [name.text isEqualToString:@""]))
+    {
+        UIAlertView *alert = [[UIAlertView alloc]      initWithTitle:@":(" 
+                                                       message:@"Please note mandatory requirements!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        
+        return;
+        
+    }
+    
+    
+    
+    [self.tabBarController.tabBar setUserInteractionEnabled:TRUE];
+    [user setHasenteredvalidinfo:@"Yes"];
+    
+    
 	if ( user != nil )
 	{
 		NSLog(@"saving age: %@", age.text);
@@ -289,6 +462,23 @@
 		NSLog(@"saving cycling freq: %d", [cyclingFreq intValue]);
 		[user setCyclingFreq:cyclingFreq];
 
+
+        NSLog(@"saving enterdrawing");
+        [user setEnterdrawing:[entersurveyswitch titleForSegmentAtIndex:[entersurveyswitch selectedSegmentIndex]]];
+
+        NSLog(@"saving ownacar");
+        [user setOwnacar:[owncarswitch titleForSegmentAtIndex:[owncarswitch selectedSegmentIndex]]];
+        
+        NSLog(@"saving liveoncampus");
+        [user setLiveoncampus:[liveoncampusswitch titleForSegmentAtIndex:[liveoncampusswitch selectedSegmentIndex]]];
+        
+        NSLog(@"saving classification");
+        [user setClassification:classification.text];
+
+        NSLog(@"saving name");
+        [user setName:name.text];
+
+        
 		NSError *error;
 		if (![managedObjectContext save:&error]) {
 			// Handle the error.
@@ -352,7 +542,7 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 2;
 }
 
 
@@ -360,10 +550,10 @@
 	switch (section) {
 		case 0:
 		default:
-			return @"Tell us about yourself";
+			return @"Thank you for using AggieTrack! Please enter your user details here. It will really help us in our Travel Survey. Fields marked * are mandatory. You cannot select other tabs until valid info is entered.";
 			break;
 		case 1:
-			return @"Your typical commute";
+			return @"Information for the drawing:\nFive gift cards for $100 each will be awarded to randomly chosen participants. If you wish to enter the raffle for the gift cards, name and phone/email is MANDATORY";
 			break;
 		case 2:
 			return @"Your cycling frequency";
@@ -413,17 +603,22 @@
 			switch ([indexPath indexAtPosition:1])
 			{
 				case 0:
-					cell.textLabel.text = @"Age";
-					[cell.contentView addSubview:age];
+					cell.textLabel.text = @"Classification*";
+					[cell.contentView addSubview:classification];
 					break;
+
 				case 1:
-					cell.textLabel.text = @"Email";
-					[cell.contentView addSubview:email];
+					cell.textLabel.text = @"Live on campus?*";
+					[cell.contentView addSubview:liveoncampusswitch];
 					break;
+
 				case 2:
-					cell.textLabel.text = @"Gender";
-					[cell.contentView addSubview:gender];
+					cell.textLabel.text = @"Own a car?*";
+					[cell.contentView addSubview:owncarswitch];
 					break;
+
+
+
 			}
 			
 			cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -440,17 +635,17 @@
 
 			switch ([indexPath indexAtPosition:1])
 			{
-				case 0:
-					cell.textLabel.text = @"Home ZIP";
-					[cell.contentView addSubview:homeZIP];
+                case 0:
+					cell.textLabel.text = @"Enter Drawing?*";
+					[cell.contentView addSubview:entersurveyswitch];
 					break;
-				case 1:
-					cell.textLabel.text = @"Work ZIP";
-					[cell.contentView addSubview:workZIP];
+                case 1:
+					cell.textLabel.text = @"Name";
+					[cell.contentView addSubview:name];
 					break;
-				case 2:
-					cell.textLabel.text = @"School ZIP";
-					[cell.contentView addSubview:schoolZIP];
+                case 2:
+                    cell.textLabel.text = @"Email/Phone";
+					[cell.contentView addSubview:email];
 					break;
 			}
 			

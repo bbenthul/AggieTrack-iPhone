@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/25/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 #import <CoreData/CoreData.h>
 
@@ -43,7 +43,19 @@
 @property (nonatomic, retain) NSString * schoolZIP;
 @property (nonatomic, retain) NSString * workZIP;
 @property (nonatomic, retain) NSString * homeZIP;
+@property (nonatomic, retain) NSString * ownacar;
+@property (nonatomic, retain) NSString * enterdrawing;
+@property (nonatomic, retain) NSString * liveoncampus;
+@property (nonatomic, retain) NSString * classification;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * hasaccepted;
+@property (nonatomic, retain) NSString * hasenteredvalidinfo;
+@property (nonatomic, retain) NSNumber * lastendlat;
+@property (nonatomic, retain) NSNumber * lastendlong;
+
 @property (nonatomic, retain) NSSet* trips;
+
+
 
 @end
 

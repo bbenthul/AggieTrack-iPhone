@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 8/10/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 
 #import <CoreLocation/CoreLocation.h>
@@ -35,7 +35,7 @@
 #import "PersonalInfoDelegate.h"
 #import "RecordingInProgressDelegate.h"
 #import "TripPurposeDelegate.h"
-
+#import "Coord.h"
 
 @class ReminderManager;
 @class TripManager;
@@ -86,9 +86,12 @@
 	BOOL recording;
 	BOOL shouldUpdateCounter;
 	BOOL userInfoSaved;
+    BOOL ispurposepending;
 	
 	TripManager		*tripManager;
 	ReminderManager *reminderManager;
+    
+    Coord * lasttriplastpoint;
 }
 
 //@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
@@ -114,10 +117,13 @@
 @property (nonatomic, retain) UIView   *opacityMask;
 @property (nonatomic, retain) UIView   *parentView;
 
+@property (nonatomic, retain) Coord   *lasttriplastpoint;
+
 @property (assign) BOOL locked;
 @property (assign) BOOL recording;
 @property (assign) BOOL shouldUpdateCounter;
 @property (assign) BOOL userInfoSaved;
+@property (assign) BOOL ispurposepending;
 
 @property (nonatomic, retain) ReminderManager *reminderManager;
 @property (nonatomic, retain) TripManager *tripManager;

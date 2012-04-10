@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 8/25/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 
 #define kActionSheetButtonConfirm	0
@@ -78,7 +78,7 @@
 #define kInfoURL			@"http://www.sfcta.org/CycleTracksInfo"
 #define kInstructionsURL	@"http://www.sfcta.org/cycletrackshelp_v2.html"
 
-//#define kSaveURL			@"http://your-database-here/post/"
+#define kSaveURL			@"http://aggietrack.com/index_new.php"
 
 #define kTripNotesPlaceholder	@"Comments"
 

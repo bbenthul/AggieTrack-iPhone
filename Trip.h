@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/22/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 #import <CoreData/CoreData.h>
 
@@ -42,6 +42,7 @@
 
 @property (nonatomic, retain) NSString *notes;
 @property (nonatomic, retain) NSString *purpose;
+@property (nonatomic, retain) NSString *mode;
 
 @property (nonatomic, retain) NSDate *start;
 @property (nonatomic, retain) NSDate *saved;

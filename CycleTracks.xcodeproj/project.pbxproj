@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,17 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28C3AD8A0F43EF2300507BA6 /* CycleTracks.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 28C3AD890F43EF2300507BA6 /* CycleTracks.xcdatamodel */; };
 		28D801B40F44B63D00FB423F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D801B30F44B63D00FB423F /* CoreData.framework */; };
+		3F32EFFB136A4BD3002FDB5B /* agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3F32EFFA136A4BD3002FDB5B /* agreement.rtf */; };
+		3F8D53BB1352B3F200382F39 /* AgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D53B91352B3F200382F39 /* AgreementView.m */; };
+		3F8D53BC1352B3F200382F39 /* AgreementView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F8D53BA1352B3F200382F39 /* AgreementView.xib */; };
+		3F9949891353B76E001388A5 /* tamulogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F9949861353B76E001388A5 /* tamulogo.png */; };
+		3F99498A1353B76E001388A5 /* tamulogoforsubmission.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F9949871353B76E001388A5 /* tamulogoforsubmission.png */; };
+		3F99498B1353B76E001388A5 /* tamuresized.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F9949881353B76E001388A5 /* tamuresized.png */; };
+		3FB63C3E135379B600E886D5 /* agreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3FB63C3D135379B600E886D5 /* agreement.txt */; };
+		3FB63C4213537E2700E886D5 /* PopupAgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB63C4013537E2700E886D5 /* PopupAgreementView.m */; };
+		3FB63C4313537E2700E886D5 /* PopupAgreementView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FB63C4113537E2700E886D5 /* PopupAgreementView.xib */; };
+		3FB63C4513538B9300E886D5 /* tamulowres.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB63C4413538B9200E886D5 /* tamulowres.png */; };
+		3FB63C4713538B9F00E886D5 /* tamuhighres.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FB63C4613538B9F00E886D5 /* tamuhighres.png */; };
 		6405FB46107E9038004B453B /* GreenCheckMark3.png in Resources */ = {isa = PBXBuildFile; fileRef = 6405FB45107E9038004B453B /* GreenCheckMark3.png */; };
 		6411996210683D7500C201F0 /* RecordTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6411996110683D7500C201F0 /* RecordTripViewController.m */; };
 		6411996D10683DCD00C201F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6411996C10683DCD00C201F0 /* CoreLocation.framework */; };
@@ -59,7 +70,6 @@
 		64577E29106DC2FD003ACBFD /* dist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64577E28106DC2FD003ACBFD /* dist.plist */; };
 		64580EFB107581EC0075DABD /* exclamation_point.png in Resources */ = {isa = PBXBuildFile; fileRef = 64580EFA107581EC0075DABD /* exclamation_point.png */; };
 		64580F50107589450075DABD /* GreenCheckMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 64580F4F107589450075DABD /* GreenCheckMark.png */; };
-		64580FF31076B32C0075DABD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 64580FF21076B32C0075DABD /* Default.png */; };
 		6458107E107A83C80075DABD /* GreenCheckMark2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6458107D107A83C80075DABD /* GreenCheckMark2.png */; };
 		6458114E107AA4D30075DABD /* bicycle-bell-normalized.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 6458114D107AA4D30075DABD /* bicycle-bell-normalized.aiff */; };
 		645E4EDC1200C1C800EFF0E6 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 645E4EDB1200C1C800EFF0E6 /* LoadingView.m */; };
@@ -102,13 +112,26 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* CycleTracksAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleTracksAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* CycleTracksAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleTracksAppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* CycleTracks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycleTracks.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* AggieTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AggieTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28C3AD890F43EF2300507BA6 /* CycleTracks.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = CycleTracks.xcdatamodel; sourceTree = "<group>"; };
 		28D801B30F44B63D00FB423F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* CycleTracks_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleTracks_Prefix.pch; sourceTree = "<group>"; };
+		3F32EFFA136A4BD3002FDB5B /* agreement.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = agreement.rtf; sourceTree = "<group>"; };
+		3F8D53B81352B3F200382F39 /* AgreementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgreementView.h; sourceTree = "<group>"; };
+		3F8D53B91352B3F200382F39 /* AgreementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgreementView.m; sourceTree = "<group>"; };
+		3F8D53BA1352B3F200382F39 /* AgreementView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AgreementView.xib; path = Classes/AgreementView.xib; sourceTree = "<group>"; };
+		3F9949861353B76E001388A5 /* tamulogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tamulogo.png; sourceTree = "<group>"; };
+		3F9949871353B76E001388A5 /* tamulogoforsubmission.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tamulogoforsubmission.png; sourceTree = "<group>"; };
+		3F9949881353B76E001388A5 /* tamuresized.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tamuresized.png; sourceTree = "<group>"; };
+		3FB63C3D135379B600E886D5 /* agreement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = agreement.txt; sourceTree = "<group>"; };
+		3FB63C3F13537E2600E886D5 /* PopupAgreementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupAgreementView.h; sourceTree = "<group>"; };
+		3FB63C4013537E2700E886D5 /* PopupAgreementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupAgreementView.m; sourceTree = "<group>"; };
+		3FB63C4113537E2700E886D5 /* PopupAgreementView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopupAgreementView.xib; sourceTree = "<group>"; };
+		3FB63C4413538B9200E886D5 /* tamulowres.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tamulowres.png; sourceTree = "<group>"; };
+		3FB63C4613538B9F00E886D5 /* tamuhighres.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tamuhighres.png; sourceTree = "<group>"; };
 		6405FB45107E9038004B453B /* GreenCheckMark3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenCheckMark3.png; sourceTree = "<group>"; };
 		6411996010683D7500C201F0 /* RecordTripViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordTripViewController.h; sourceTree = "<group>"; };
 		6411996110683D7500C201F0 /* RecordTripViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordTripViewController.m; sourceTree = "<group>"; };
@@ -170,7 +193,6 @@
 		64577E28106DC2FD003ACBFD /* dist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dist.plist; sourceTree = "<group>"; };
 		64580EFA107581EC0075DABD /* exclamation_point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation_point.png; sourceTree = "<group>"; };
 		64580F4F107589450075DABD /* GreenCheckMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenCheckMark.png; sourceTree = "<group>"; };
-		64580FF21076B32C0075DABD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		6458107D107A83C80075DABD /* GreenCheckMark2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenCheckMark2.png; sourceTree = "<group>"; };
 		6458114D107AA4D30075DABD /* bicycle-bell-normalized.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "bicycle-bell-normalized.aiff"; sourceTree = "<group>"; };
 		64581198107AC1080075DABD /* RecordingInProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingInProgressDelegate.h; sourceTree = "<group>"; };
@@ -274,6 +296,11 @@
 				64119F021069ACF800C201F0 /* TripManager.h */,
 				64119F031069ACF800C201F0 /* TripManager.m */,
 				6433E54E106D542100C27387 /* TripPurposeDelegate.h */,
+				3F8D53B81352B3F200382F39 /* AgreementView.h */,
+				3F8D53B91352B3F200382F39 /* AgreementView.m */,
+				3FB63C3F13537E2600E886D5 /* PopupAgreementView.h */,
+				3FB63C4013537E2700E886D5 /* PopupAgreementView.m */,
+				3FB63C4113537E2700E886D5 /* PopupAgreementView.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -281,7 +308,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* CycleTracks.app */,
+				1D6058910D05DD3D006BFB54 /* AggieTrack.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -321,11 +348,14 @@
 				6458114D107AA4D30075DABD /* bicycle-bell-normalized.aiff */,
 				8D1107310486CEB800E47090 /* CycleTracks-Info.plist */,
 				64210F28113508B800415F1A /* MainWindow.xib */,
+				3F8D53BA1352B3F200382F39 /* AgreementView.xib */,
 				642F14791071D3F10050BCB9 /* MapViewController.xib */,
 				64C8D40211386B26008BCADE /* RecordMap.xib */,
 				64210F5311350AE200415F1A /* RecordNewTrip.xib */,
 				64119A9B1068665B00C201F0 /* TripPurposePicker.xib */,
+				3F32EFFA136A4BD3002FDB5B /* agreement.rtf */,
 				64FCC5B311352242000FA1B6 /* PersonalInfo.xib */,
+				3FB63C3D135379B600E886D5 /* agreement.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -374,6 +404,11 @@
 		6411A16A106A05DE00C201F0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3F9949861353B76E001388A5 /* tamulogo.png */,
+				3F9949871353B76E001388A5 /* tamulogoforsubmission.png */,
+				3F9949881353B76E001388A5 /* tamuresized.png */,
+				3FB63C4613538B9F00E886D5 /* tamuhighres.png */,
+				3FB63C4413538B9200E886D5 /* tamulowres.png */,
 				64C8D40411386C9F008BCADE /* LCD-screen-288x126.png */,
 				64C8D41B11387949008BCADE /* record-map-frame-288x141.png */,
 				64D31CA7108E735B00D52130 /* lock_button1.png */,
@@ -383,7 +418,6 @@
 				642394EC108D402300DF6325 /* LockIcon.png */,
 				6405FB45107E9038004B453B /* GreenCheckMark3.png */,
 				6458107D107A83C80075DABD /* GreenCheckMark2.png */,
-				64580FF21076B32C0075DABD /* Default.png */,
 				64580F4F107589450075DABD /* GreenCheckMark.png */,
 				64580EFA107581EC0075DABD /* exclamation_point.png */,
 				642F17E610731F7C0050BCB9 /* MapCoord.png */,
@@ -487,9 +521,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* CycleTracks */ = {
+		1D6058900D05DD3D006BFB54 /* AggieTracks */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CycleTracks" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "AggieTracks" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -499,9 +533,9 @@
 			);
 			dependencies = (
 			);
-			name = CycleTracks;
+			name = AggieTracks;
 			productName = CycleTracks;
-			productReference = 1D6058910D05DD3D006BFB54 /* CycleTracks.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* AggieTrack.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -510,13 +544,20 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "CycleTracks" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* CycleTracks */,
+				1D6058900D05DD3D006BFB54 /* AggieTracks */,
 			);
 		};
 /* End PBXProject section */
@@ -559,7 +600,6 @@
 				642F17E710731F7C0050BCB9 /* MapCoord.png in Resources */,
 				64580EFB107581EC0075DABD /* exclamation_point.png in Resources */,
 				64580F50107589450075DABD /* GreenCheckMark.png in Resources */,
-				64580FF31076B32C0075DABD /* Default.png in Resources */,
 				6458107E107A83C80075DABD /* GreenCheckMark2.png in Resources */,
 				6458114E107AA4D30075DABD /* bicycle-bell-normalized.aiff in Resources */,
 				6405FB46107E9038004B453B /* GreenCheckMark3.png in Resources */,
@@ -579,6 +619,15 @@
 				64C8D433113889B1008BCADE /* settings_icon2.png in Resources */,
 				64BEA66B1145857E00BF8E94 /* tabbar_instructions.png in Resources */,
 				64BEA66C1145857E00BF8E94 /* tabbar_settings.png in Resources */,
+				3F8D53BC1352B3F200382F39 /* AgreementView.xib in Resources */,
+				3FB63C3E135379B600E886D5 /* agreement.txt in Resources */,
+				3FB63C4313537E2700E886D5 /* PopupAgreementView.xib in Resources */,
+				3FB63C4513538B9300E886D5 /* tamulowres.png in Resources */,
+				3FB63C4713538B9F00E886D5 /* tamuhighres.png in Resources */,
+				3F9949891353B76E001388A5 /* tamulogo.png in Resources */,
+				3F99498A1353B76E001388A5 /* tamulogoforsubmission.png in Resources */,
+				3F99498B1353B76E001388A5 /* tamuresized.png in Resources */,
+				3F32EFFB136A4BD3002FDB5B /* agreement.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +665,8 @@
 				6426476E1073FEC300E43DEF /* ReminderManager.m in Sources */,
 				64210F6111350C8500415F1A /* AboutViewController.m in Sources */,
 				645E4EDC1200C1C800EFF0E6 /* LoadingView.m in Sources */,
+				3F8D53BB1352B3F200382F39 /* AgreementView.m in Sources */,
+				3FB63C4213537E2700E886D5 /* PopupAgreementView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,7 +677,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -634,10 +686,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CycleTracks_Prefix.pch;
 				INFOPLIST_FILE = "CycleTracks-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				PRODUCT_NAME = CycleTracks;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = AggieTrack;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -645,16 +700,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CycleTracks_Prefix.pch;
 				INFOPLIST_FILE = "CycleTracks-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 2.2.1;
-				PRODUCT_NAME = CycleTracks;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = AggieTrack;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -662,12 +721,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.0;
+				PRODUCT_NAME = AggieTrack;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 			};
 			name = Distribution;
 		};
@@ -675,16 +740,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CycleTracks_Prefix.pch;
 				INFOPLIST_FILE = "CycleTracks-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				PRODUCT_NAME = CycleTracks;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = AggieTrack;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Distribution;
 		};
@@ -693,13 +762,18 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = dist.plist;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: mopimp productions";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "50065992-A084-4871-A0E0-4871B4BD3D7C";
-				SDKROOT = iphoneos3.0;
+				PRODUCT_NAME = AggieTrack;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 			};
 			name = Beta;
 		};
@@ -708,7 +782,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = dist.plist;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -716,10 +791,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CycleTracks_Prefix.pch;
 				INFOPLIST_FILE = "CycleTracks-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				PRODUCT_NAME = CycleTracks;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = AggieTrack;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Beta;
 		};
@@ -727,12 +805,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.0;
+				PRODUCT_NAME = AggieTrack;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 			};
 			name = "Release Beta";
 		};
@@ -741,16 +825,20 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = dist.plist;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CycleTracks_Prefix.pch;
 				INFOPLIST_FILE = "CycleTracks-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				PRODUCT_NAME = CycleTracks;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = AggieTrack;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.1.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Release Beta";
 		};
@@ -758,12 +846,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.0;
+				PRODUCT_NAME = AggieTrack;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -771,19 +865,25 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.0;
+				PRODUCT_NAME = AggieTrack;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CycleTracks" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "AggieTracks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,

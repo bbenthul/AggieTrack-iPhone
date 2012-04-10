@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/22/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 
 #import "CJSONSerializer.h"
@@ -67,6 +67,8 @@
 		self.managedObjectContext	= context;
 		self.trip					= nil;
 		purposeIndex				= -1;
+        modeIndex                   = -1;
+        
     }
     return self;
 }
@@ -118,6 +120,7 @@
 		
 		// TODO: initialize purposeIndex from trip.purpose
 		purposeIndex				= -1;
+        modeIndex = -1;
     }
     return YES;
 }
@@ -263,6 +266,93 @@
 	return newDist;
 }
 
+- (bool)checkForInit
+{
+    bool result = NO;
+    
+    NSFetchRequest		*request = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext];
+	[request setEntity:entity];
+	
+	NSError *error;
+	NSInteger count = [managedObjectContext countForFetchRequest:request error:&error];
+	//NSLog(@"saved user count  = %d", count);
+	
+	if ( count )
+	{
+		NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+		if (mutableFetchResults == nil) 
+        {
+			// Handle the error.
+			NSLog(@"no saved user");
+			if ( error != nil )
+				NSLog(@"TripManager fetch saved user data error %@, %@", error, [error localizedDescription]);
+		}
+		
+		User *user = [mutableFetchResults objectAtIndex:0];
+        NSArray *filteredCoords	= [trip.coords allObjects];
+        int numcount = [trip.coords count];
+        Coord *temploc = [filteredCoords objectAtIndex:numcount-1];
+        
+        if ([[user lastendlat] doubleValue] == 0.0 || [[user lastendlong] doubleValue] == 0.0)
+        {
+            
+            [user setLastendlat:[NSNumber numberWithDouble:[temploc.latitude doubleValue]]];
+            [user setLastendlong:[NSNumber numberWithDouble:[temploc.longitude doubleValue]]];
+            NSLog(@"initializing saved end point from zero....");
+        }
+        
+        CLLocation *storedLoc = [[CLLocation alloc] initWithLatitude:[[user lastendlat] doubleValue] longitude:[[user lastendlong] doubleValue]];
+        
+        CLLocation *storedLoc1 = [[CLLocation alloc] initWithLatitude:[temploc.latitude doubleValue] longitude:[temploc.longitude doubleValue]];
+        
+        //  get distance in meters
+        if ([storedLoc distanceFromLocation:storedLoc1] > 200)
+            result = YES;
+        
+        //  now update stored distance
+        [user setLastendlat:[NSNumber numberWithDouble:[temploc.latitude doubleValue]]];
+        [user setLastendlong:[NSNumber numberWithDouble:[temploc.longitude doubleValue]]];
+        NSLog(@"updating stored distance to current last point of trip");
+        
+    }
+    [request release];
+    return result;
+    
+}
+
+
+
+
+- (void)addLastUsedCoord
+{
+    NSFetchRequest		*request = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext];
+	[request setEntity:entity];
+	
+	NSError *error;
+	NSInteger count = [managedObjectContext countForFetchRequest:request error:&error];
+	//NSLog(@"saved user count  = %d", count);
+	
+	if ( count )
+	{
+		NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+		if (mutableFetchResults == nil) {
+			// Handle the error.
+			NSLog(@"no saved user");
+			if ( error != nil )
+				NSLog(@"TripManager fetch saved user data error %@, %@", error, [error localizedDescription]);
+		}
+		
+		User *user = [mutableFetchResults objectAtIndex:0];
+        [self addCoord:[[CLLocation alloc] initWithLatitude:[[user lastendlat] doubleValue] longitude:[[user lastendlong] doubleValue]]];
+        NSLog(@"adding last used coord of %@ %@", [user lastendlat], [user lastendlong]);
+        
+    }
+    [request release];
+    
+}
+
 
 - (CLLocationDistance)addCoord:(CLLocation *)location
 {
@@ -371,7 +461,7 @@
 - (NSString*)jsonEncodeUserData
 {
 	NSLog(@"jsonEncodeUserData");
-	NSMutableDictionary *userDict = [NSMutableDictionary dictionaryWithCapacity:7];
+	NSMutableDictionary *userDict = [NSMutableDictionary dictionaryWithCapacity:12];
 	
 	NSFetchRequest		*request = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext];
@@ -402,6 +492,13 @@
 			[userDict setValue:user.workZIP		forKey:@"workZIP"];
 			[userDict setValue:user.schoolZIP	forKey:@"schoolZIP"];
 			[userDict setValue:user.cyclingFreq	forKey:@"cyclingFreq"];
+            
+   			[userDict setValue:user.ownacar	forKey:@"ownacar"];
+   			[userDict setValue:user.liveoncampus	forKey:@"liveoncampus"];
+   			[userDict setValue:user.enterdrawing	forKey:@"enterdrawing"];
+  			[userDict setValue:user.classification	forKey:@"classification"];
+   			[userDict setValue:user.name	forKey:@"name"];
+            
 		}
 		else
 			NSLog(@"TripManager fetch user FAIL");
@@ -485,7 +582,26 @@
 #if kSaveProtocolVersion == kSaveProtocolVersion_2
 	NSLog(@"saving using protocol version 2");
 	
+    // interpolate only 100 points
+    if ([coords count] > 100)
+    {
+        NSMutableArray* hundcoords = [[NSMutableArray alloc] init];
+        float step = [coords count]/(float)100;
+        for (int i = 0; i < 100; i++) {
+            Coord* temper = [coords objectAtIndex:(int)round(i*step)];
+            [hundcoords addObject:temper];
+        }
+        
+        enumerator = [hundcoords objectEnumerator];
+        NSLog(@"count of hundcoords is %d", [hundcoords count]);
+    }
+    
+    NSLog(@"coords has %d objects. enumerating...", [coords count]);
+//    NSLog(@"coords is %@", coords);
+//    NSLog(@"enum is %@", enumerator);
+    
 	// create a tripDict entry for each coord
+    // IGNORE ERROR BELOW 
 	while (coord = [enumerator nextObject])
 	{
 		NSMutableDictionary *coordsDict = [NSMutableDictionary dictionaryWithCapacity:7];
@@ -496,6 +612,9 @@
 		[coordsDict setValue:coord.hAccuracy forKey:@"hac"];
 		[coordsDict setValue:coord.vAccuracy forKey:@"vac"];
 		
+        NSLog(@"coord is %@ %@", coord.latitude, coord.longitude);
+
+        
 		NSString *newDateString = [outputFormatter stringFromDate:coord.recorded];
 		[coordsDict setValue:newDateString forKey:@"rec"];
 		[tripDict setValue:coordsDict forKey:newDateString];
@@ -531,6 +650,13 @@
 	else
 		purpose = @"unknown";
 	
+    NSString *mode;
+    if ( trip.mode )
+		mode = trip.mode;
+	else
+		mode = @"unknown";
+	
+    
 	// get trip notes
 	NSString *notes = @"";
 	if ( trip.notes )
@@ -547,6 +673,7 @@
 	NSDictionary *postVars = [NSDictionary dictionaryWithObjectsAndKeys:
 							  jsonTripData, @"coords",
 							  purpose, @"purpose",
+                              mode, @"mode",
 							  notes, @"notes",
 							  start, @"start",
 							  jsonUserData, @"user",
@@ -706,6 +833,11 @@
 	return purposeIndex;
 }
 
+- (NSInteger)getModeIndex
+{
+	NSLog(@"%d", modeIndex);
+	return modeIndex;
+}
 
 #pragma mark TripPurposeDelegate methods
 
@@ -715,6 +847,10 @@
 	return [TripPurpose getPurposeString:index];
 }
 
+- (NSString *)getModeString:(unsigned int)index
+{
+	return [TripPurpose getModeString:index];
+}
 
 - (NSString *)setPurpose:(unsigned int)index
 {
@@ -737,6 +873,29 @@
 
 	dirty = YES;
 	return purpose;
+}
+
+- (NSString *)setMode:(unsigned int)index
+{
+	NSString *mode = [self getModeString:index];
+	NSLog(@"setMode: %@", mode);
+	modeIndex = index;
+	
+	if ( trip )
+	{
+		[trip setMode:mode];
+		
+		NSError *error;
+		if (![managedObjectContext save:&error]) {
+			// Handle the error.
+			NSLog(@"setPurpose error %@, %@", error, [error localizedDescription]);
+		}
+	}
+	else
+		[self createTrip:index];
+    
+	dirty = YES;
+	return mode;
 }
 
 
@@ -762,12 +921,17 @@
 {
 	NSString *purpose = [self getPurposeString:index];
 	NSLog(@"createTrip: %@", purpose);
-	
+
+    NSString *mode = [self getModeString:index];
+	NSLog(@"createTrip: %@", mode);
+
+    
 	// Create and configure a new instance of the Trip entity
 	trip = (Trip *)[[NSEntityDescription insertNewObjectForEntityForName:@"Trip" 
 												  inManagedObjectContext:managedObjectContext] retain];
 	
 	[trip setPurpose:purpose];
+   	[trip setMode:mode];
 	[trip setStart:[NSDate date]];
 	
 	NSError *error;
@@ -776,7 +940,6 @@
 		NSLog(@"createTrip error %@, %@", error, [error localizedDescription]);
 	}
 }
-
 
 - (void)promptForTripNotes
 {
@@ -803,6 +966,27 @@
 	{
 		NSLog(@"tripNotes didDismissWithButtonIndex: %d", buttonIndex);
 		
+        if (([trip.purpose isEqualToString:@"Other"] || [trip.mode isEqualToString:@"Other"]) && ([tripNotesText.text isEqualToString:kTripNotesPlaceholder] || [tripNotesText.text isEqualToString:@"Please specify custom purpose/mode here"]))
+        {
+            // they ahve to specify something in comments
+            tripNotes = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                   message:@"\n\n\n"
+                                                  delegate:self
+                                         cancelButtonTitle:nil
+                                         otherButtonTitles:@"OK", nil];
+            
+            [self createTripNotesText];
+            tripNotesText.text = @"Please specify custom purpose/mode here";
+            
+            [tripNotes addSubview:tripNotesText];
+            [tripNotes show];
+            [tripNotes release];
+            
+            return;
+            
+        }
+        
+        
 		// save trip notes
 		if ( buttonIndex == 1 )
 		{
@@ -1135,23 +1319,55 @@
 		return kTripPurposeOther;
 }
 
++ (unsigned int)getModeIndex:(NSString*)string
+{
+	if ( [string isEqualToString:kTripModeCommuteString] )
+		return kTripPurposeCommute;
+	else if ( [string isEqualToString:kTripModeSchoolString] )
+		return kTripPurposeSchool;
+	else if ( [string isEqualToString:kTripModeWorkString] )
+		return kTripPurposeWork;
+	else if ( [string isEqualToString:kTripModeExerciseString] )
+		return kTripPurposeExercise;
+	else if ( [string isEqualToString:kTripModeSocialString] )
+		return kTripPurposeSocial;
+	else if ( [string isEqualToString:kTripModeShoppingString] )
+		return kTripPurposeShopping;
+	else if ( [string isEqualToString:kTripModeOtherString] )
+		return kTripPurposeErrand;
+	//	else if ( [string isEqualToString:kTripPurposeOtherString] )
+	else
+		return kTripPurposeOther;
+}
+
+/*
+ * Class
+ * Home/Dorm
+ * Work
+ * School-related
+ * Social/Rec.
+ * Shopping
+ * Errand
+ * Other
+ */
+
 + (NSString *)getPurposeString:(unsigned int)index
 {
 	switch (index) {
 		case kTripPurposeCommute:
-			return @"Commute";
+			return @"Class";
 			break;
 		case kTripPurposeSchool:
-			return @"School";
+			return @"Home/Dorm";
 			break;
 		case kTripPurposeWork:
-			return @"Work-Related";
+			return @"Work";
 			break;
 		case kTripPurposeExercise:
-			return @"Exercise";
+			return @"School-related";
 			break;
 		case kTripPurposeSocial:
-			return @"Social";
+			return @"Social/Rec.";
 			break;
 		case kTripPurposeShopping:
 			return @"Shopping";
@@ -1166,5 +1382,45 @@
 	}
 }
 
+/*
+ * Walk
+ * Bike
+ * MotorBike
+ * Carpool
+ * Bus
+ * Car
+ * Other
+ */
+
++ (NSString *)getModeString:(unsigned int)index
+{
+	switch (index) {
+		case kTripPurposeCommute:
+			return @"Walk";
+			break;
+		case kTripPurposeSchool:
+			return @"Bike";
+			break;
+		case kTripPurposeWork:
+			return @"Motorbike";
+			break;
+		case kTripPurposeExercise:
+			return @"Carpool";
+			break;
+		case kTripPurposeSocial:
+			return @"Bus";
+			break;
+		case kTripPurposeShopping:
+			return @"Car";
+			break;
+		case kTripPurposeErrand:
+			return @"Other";
+			break;
+		case kTripPurposeOther:
+		default:
+			return @"MagicCarpet";
+			break;
+	}
+}
 @end
 

@@ -26,7 +26,7 @@
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/22/09.
 //	For more information on the project, 
-//	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+//	e-mail Elizabeth Sall at the SFCTA <elizabeth@sfcta.org>
 
 
 #define kTripPurposeCommute		0
@@ -47,14 +47,43 @@
 #define kTripPurposeErrandIcon		@"errands.tif"
 #define kTripPurposeOtherIcon		@"other.tif"
 
-#define kTripPurposeCommuteString	@"Commute"
-#define kTripPurposeSchoolString	@"School"
-#define kTripPurposeWorkString		@"Work-Related"
-#define kTripPurposeExerciseString	@"Exercise"
-#define kTripPurposeSocialString	@"Social"
+/*
+ * Class
+ * Home/Dorm
+ * Work
+ * School-related
+ * Social/Rec.
+ * Shopping
+ * Errand
+ * Other
+ */
+
+#define kTripPurposeCommuteString	@"Class"
+#define kTripPurposeSchoolString	@"Home/Dorm"
+#define kTripPurposeWorkString		@"Work"
+#define kTripPurposeExerciseString	@"School-related"
+#define kTripPurposeSocialString	@"Social/Rec."
 #define kTripPurposeShoppingString	@"Shopping"
 #define kTripPurposeErrandString	@"Errand"
 #define kTripPurposeOtherString		@"Other"
+
+/*
+ * Walk
+ * Bike
+ * MotorBike
+ * Carpool
+ * Bus
+ * Car
+ * Other
+ */
+#define kTripModeCommuteString	@"Walk"
+#define kTripModeSchoolString	@"Bike"
+#define kTripModeWorkString		@"Motorbike"
+#define kTripModeExerciseString	@"Carpool"
+#define kTripModeSocialString	@"Bus"
+#define kTripModeShoppingString	@"Car"
+#define kTripModeOtherString	@"Other"
+
 
 
 @protocol TripPurposeDelegate <NSObject>
@@ -62,9 +91,12 @@
 @required
 - (NSString *)getPurposeString:(unsigned int)index;
 - (NSString *)setPurpose:(unsigned int)index;
+- (NSString *)getModeString:(unsigned int)index;
+- (NSString *)setMode:(unsigned int)index;
+
 
 @optional
 - (void)didCancelPurpose;
-- (void)didPickPurpose:(unsigned int)index;
+- (void)didPickPurpose:(unsigned int)index didPickMode:(unsigned int)index1 ;
 
 @end
